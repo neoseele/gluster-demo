@@ -312,7 +312,7 @@ GlusterFS aggregates various storage servers over network interconnects into one
 
 GlusterFS relies on an elastic hashing algorithm, rather than using either a centralized or distributed metadata model. This no-metadata server architecture ensures better performance, linear scalability, and reliability.
 
-![Arch](https://github.com/neoseele/gluster-demo/raw/master/RH_Gluster_Storage_diagrams_334434_0415_JCS_5.png)
+![Arch](https://github.com/neoseele/gluster-demo/raw/master/resources/RH_Gluster_Storage_diagrams_334434_0415_JCS_5.png)
 
 
 This [doc](http://docs.gluster.org/en/latest/Quick-Start-Guide/Architecture/#overall-working-of-glusterfs) explains a bit more of how GlusterFS works:
@@ -346,6 +346,6 @@ Since GlusterFS
 
 We can now turn a GKE cluster (with local-ssd enabled) into a GlusterFS cluster. Workload running in the cluster will be able to use persistent ReadWriteMany storage based on local-ssd (via replicated GlusterFS volumes).
 
-Thankfully, there is already a [open-source project](https://github.com/gluster/gluster-kubernetes) for this. However the deployment code requires XFS, which is not available in COS, I have to [improvise](https://github.com/neoseele/gluster-kubernetes).
+Thankfully, there is already a [open-source project](https://github.com/gluster/gluster-kubernetes) for this. However the deployment code requires XFS, which is not available in COS, I have to [improvise](https://github.com/neoseele/heketi/tree/ext4).
 
 ## Demo
