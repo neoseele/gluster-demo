@@ -6,6 +6,7 @@ _must have minimal 3 nodes to run a gluster cluster_
 
 ```sh
 gcloud container clusters create kube-test \
+--zone=us-central1-b \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
@@ -22,8 +23,9 @@ i=1
 for node in `kubectl get nodes -o jsonpath='{.items[*].metadata.name}'`;
 do
   echo "* ${node}";
-  gcloud compute ssh $node -- 'sudo sh -c "modprobe dm_thin_pool; modprobe dm_snapshot; modprobe dm_mirror"'
-  gcloud compute ssh $node -- 'sudo sh -c "wipefs /dev/sdb"'
+  gcloud compute ssh $node --zone us-central1-b -- 'sudo sh -c "modprobe dm_thin_pool; modprobe dm_snapshot; modprobe dm_mirror"'
+  gcloud compute ssh $node --zone us-central1-b -- 'sudo sh -c "umount /dev/sdb && dd if=/dev/zero of=/dev/sdb bs=512 count=100"'
+  # gcloud compute ssh $node --zone us-central1-b -- 'sudo sysctl -w net.bridge.bridge-nf-call-iptables=1'
   ((i+=1))
 done
 ```
@@ -143,5 +145,5 @@ kubectl get service --all-namespaces
 
 * Delete the cluster
 ```sh
-gcloud container clusters delete kube-test
+gcloud container clusters delete kube-test --zone us-central1-b
 ```
