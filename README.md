@@ -330,10 +330,10 @@ This [doc](http://docs.gluster.org/en/latest/Quick-Start-Guide/Architecture/#ove
 ### Components
 
 * node
-* brick (any directory on an underlying disk filesystem)
 * glusterd (the daemon is used for elastic volume management)
+* brick (any directory on an underlying disk filesystem)
 * glusterfsd (each brick has a matching glusterfsd)
-*
+* FUSE (mount.glusterfs)
 
 CNS with GlusterFS
 ---
@@ -344,8 +344,8 @@ Since GlusterFS
 * is containerized
 * has a RESTful based volume management API
 
-We can now turn a GKE cluster (with local-ssd enabled) into a GlusterFS cluster. Workload running in the cluster will be able to use persistent ReadWriteMany storage based on local-ssd (via replicated GlusterFS volumes).
+We can now turn a GKE cluster, with local SSDs attached the nodes, into a **Container Native Storage**. Workload running in the cluster is now able to use the cluster itself as a **Fast**, **Persistent** and **ReadWriteMany** Storage.
 
-Thankfully, there is already a [open-source project](https://github.com/gluster/gluster-kubernetes) for this. However the deployment code requires XFS, which is not available in COS, I have to [improvise](https://github.com/neoseele/heketi/tree/ext4).
+Somebody thought about this already [open-source project](https://github.com/gluster/gluster-kubernetes), but the code needs some [hack](https://github.com/neoseele/heketi/tree/ext4) to work with COS, as COS does not support XFS.
 
 ## Demo
