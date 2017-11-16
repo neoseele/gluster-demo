@@ -329,7 +329,7 @@ This [doc](http://docs.gluster.org/en/latest/Quick-Start-Guide/Architecture/#ove
 
 ### Components
 
-* node
+* node (to form a trusted server pool)
 * glusterd (the daemon is used for elastic volume management)
 * brick (any directory on an underlying disk filesystem)
 * glusterfsd (each brick has a matching glusterfsd)
