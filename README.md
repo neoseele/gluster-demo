@@ -284,6 +284,8 @@ kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storagecla
 GlusterFS
 ---
 
+![gluster_logo](https://github.com/neoseele/gluster-demo/raw/master/resources/glusterfs-square-logo.png)
+
 GlusterFS is a scalable network filesystem. Its nice but why do we care?
 
 According to this:
@@ -310,7 +312,7 @@ GlusterFS aggregates various storage servers over network interconnects into one
 
 GlusterFS relies on an elastic hashing algorithm, rather than using either a centralized or distributed metadata model. This no-metadata server architecture ensures better performance, linear scalability, and reliability.
 
-![Arch](https://access.redhat.com/webassets/avalon/d/Red_Hat_Storage-3.1-Administration_Guide-en-US/images/667b8206666b18dbed70d300c3e2710c/RH_Gluster_Storage_diagrams_334434_0415_JCS_5.png)
+![Arch](https://github.com/neoseele/gluster-demo/raw/master/RH_Gluster_Storage_diagrams_334434_0415_JCS_5.png)
 
 
 This [doc](http://docs.gluster.org/en/latest/Quick-Start-Guide/Architecture/#overall-working-of-glusterfs) explains a bit more of how GlusterFS works:
@@ -331,7 +333,7 @@ This [doc](http://docs.gluster.org/en/latest/Quick-Start-Guide/Architecture/#ove
 * brick (any directory on an underlying disk filesystem)
 * glusterd (the daemon is used for elastic volume management)
 * glusterfsd (each brick has a matching glusterfsd)
-* 
+*
 
 CNS with GlusterFS
 ---
