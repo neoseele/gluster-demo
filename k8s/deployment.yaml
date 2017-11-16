@@ -1,0 +1,34 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: nm-rails
+  labels:
+    deployment: nm-rails
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nm-rails
+    spec:
+      # nodeSelector:
+      #   pool: default
+      containers:
+      # [START app_container]
+      - name: nm-rails
+        image: gcr.io/nmiu-play/nm-rails:latest
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 3000
+            protocol: TCP
+        imagePullPolicy: Always
+      # [END app_container]
+        volumeMounts:
+          - name: data
+            mountPath: /usr/src/app/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: nm-rails-data
+

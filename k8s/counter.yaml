@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+  labels:
+    pod: counter
+spec:
+  containers:
+    - name: busybox
+      image: gcr.io/google-containers/busybox
+      args:
+        - '/bin/sh'
+        - '-c'
+        - >
+          i=0;
+          while true; do
+            echo "$i: $(date)";
+            i=$((i+1));
+            sleep 5;
+          done;
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: testvol
+          mountPath: "/data"
+  volumes:
+    - name: testvol
+      glusterfs:
+        endpoints: heketi-storage-endpoints
+        path: test
+        readOnly: false
