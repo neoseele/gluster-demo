@@ -346,6 +346,6 @@ Since GlusterFS
 
 We can now turn a GKE cluster, with local SSDs attached the nodes, into a **Container Native Storage**. Workload running in the cluster is now able to use the cluster itself as a **Fast**, **Persistent** and **ReadWriteMany** Storage.
 
-Somebody thought about this already [open-source project](https://github.com/gluster/gluster-kubernetes), but the code needs some [hack](https://github.com/neoseele/heketi/tree/ext4) to work with COS, as COS does not support XFS.
+Such deployment can be done via [gluster-kubernetes](https://github.com/gluster/gluster-kubernetes), but hekeki needs some [hack](https://github.com/neoseele/heketi/tree/ext4) to work with Container optimized OS, as COS does not support XFS.
 
 ## Demo
