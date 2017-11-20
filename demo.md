@@ -125,6 +125,10 @@ kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storagecla
 _In nm-toolbox pod_
 
 ```sh
+kubectl exec nm-toolbox -it bash
+```
+
+```sh
 heketi-cli-admin volume list
 
 ## reload topology

@@ -29,7 +29,7 @@ spec:
       containers:
       # [START app_container]
       - name: nm-rails
-        image: gcr.io/nmiu-play/nm-rails:latest
+        image: gcr.io/nmiu-play/nm-rails:prod.32
         imagePullPolicy: Always
         ports:
           - name: http
@@ -43,7 +43,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: nm-rails-data
+            claimName: pvc-nm-rails
 
 ---
 kind: Service
