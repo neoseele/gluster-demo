@@ -29,5 +29,7 @@ curl http://$SERVICE/posts.json
 ## Clean up
 
 ```sh
-kubectl delete -f nm-rails.yaml
+kubectl delete service srv-nm-rails
+kubectl delete deployment nm-rails
+kubectl delete pvc pvc-nm-rails
 ```

@@ -138,9 +138,9 @@ heketi-cli-admin topology load --json=topology.json
 
 ## Clean Up
 
-* Delete load balancer type services
+* Delete the service
 ```sh
-kubectl get service --all-namespaces
+kubectl delete service heketi-ext
 ```
 
 * Delete the cluster
