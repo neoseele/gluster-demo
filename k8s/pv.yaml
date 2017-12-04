@@ -5,6 +5,7 @@ metadata:
   name : pv-test
 spec:
   accessModes:
+    - ReadOnlyMany
     - ReadWriteOnce
   capacity:
     storage: 10Gi

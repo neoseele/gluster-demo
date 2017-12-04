@@ -4,7 +4,9 @@ metadata:
     name: pvc-test
 spec:
   accessModes:
-     - ReadWriteOnce
+     - ReadOnlyMany
+     #- ReadWriteOnce
+     #- ReadWriteMany
   resources:
     requests:
       storage: 2Gi

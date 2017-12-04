@@ -4,6 +4,7 @@ metadata:
     name: pvc-standard
 spec:
   accessModes:
+    #- ReadOnlyMany
     - ReadWriteOnce
   resources:
     requests:
