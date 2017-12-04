@@ -6,7 +6,7 @@ spec:
   volumes:
     - name: data
       persistentVolumeClaim:
-        claimName: test-pvc
+        claimName: pvc-test
   containers:
     - name: busybox
       image: gcr.io/google_containers/busybox
