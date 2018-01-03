@@ -7,6 +7,8 @@ spec:
     - name: data
       persistentVolumeClaim:
         claimName: pvc-test
+    - name: test
+      emptyDir: {}
   containers:
     - name: busybox
       image: gcr.io/google_containers/busybox
@@ -17,3 +19,5 @@ spec:
         - name: data
           mountPath: /data
           readOnly: false
+        - name: test
+          mountPath: /cache

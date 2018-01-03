@@ -9,6 +9,7 @@ gcloud container clusters create kube-test \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
+--cluster-version=1.8.3-gke.0 \
 --node-labels=storagenode=glusterfs \
 --tags=ssh \
 --local-ssd-count=1
