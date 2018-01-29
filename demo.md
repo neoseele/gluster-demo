@@ -5,15 +5,16 @@
 _must have minimal 3 nodes to run a gluster cluster_
 
 ```sh
-gcloud container clusters create kube-test \
+gcloud alpha container clusters create kube-test \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
 --cluster-version=1.8.5-gke.0 \
 --node-labels=storagenode=glusterfs \
 --tags=ssh \
---local-ssd-count=1 \
---enable-kubernetes-alpha
+--enable-kubernetes-alpha \
+--local-ssd-volumes count=1,type=scsi,format=block \
+--scopes cloud-platform,storage-rw,logging-write,monitoring-write,service-control,service-management
 ```
 
 ### Modprobe / Cleanup SSD
@@ -24,12 +25,32 @@ for node in `kubectl get nodes -o jsonpath='{.items[*].metadata.name}'`;
 do
   echo "* ${node}";
   gcloud compute ssh $node -- 'sudo sh -c "modprobe dm_thin_pool"'
-  gcloud compute ssh $node -- 'sudo sh -c "umount /dev/sdb && dd if=/dev/zero of=/dev/sdb bs=512 count=100"'
+  # gcloud compute ssh $node -- 'sudo sh -c "umount /dev/sdb && dd if=/dev/zero of=/dev/sdb bs=512 count=100"'
   ((i+=1))
 done
 ```
 
 ### Pre Deploy
+
+```sh
+cat << EOF | kubectl apply -f -
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: default-rbac
+subjects:
+  - kind: ServiceAccount
+    # Reference to upper's `metadata.name`
+    name: default
+    # Reference to upper's `metadata.namespace`
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+EOF
+```
 
 ```sh
 kubectl create secret generic heketi-admin-secret \
