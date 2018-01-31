@@ -1,5 +1,21 @@
 ## Deploy Gluster
 
+### local ssd alpha
+
+Need to make the gcloud command hit the alpha API.
+For some reason that is not default behavior, need to set the environment variable:
+
+```sh
+export CLOUDSDK_CONTAINER_USE_V1_API_CLIENT=false
+```
+or
+```sh
+gcloud config set container/use_v1_api_client false
+```
+
+*https://cloud.google.com/kubernetes-engine/docs/reference/api-organization#beta*
+
+
 ### Create the GKE cluster
 
 _must have minimal 3 nodes to run a gluster cluster_
@@ -9,11 +25,11 @@ gcloud alpha container clusters create kube-test \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
---cluster-version=1.8.5-gke.0 \
+--cluster-version=1.9.1-gke.0 \
 --node-labels=storagenode=glusterfs \
 --tags=ssh \
 --enable-kubernetes-alpha \
---local-ssd-volumes count=1,type=scsi,format=block \
+--local-ssd-volumes count=1,type=nvme,format=block \
 --scopes cloud-platform,storage-rw,logging-write,monitoring-write,service-control,service-management
 ```
 
