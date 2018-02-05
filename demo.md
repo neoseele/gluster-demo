@@ -1,9 +1,21 @@
 ## Deploy Gluster
 
-### local ssd alpha
+### Local SSD Alpha
 
-Need to make the gcloud command hit the alpha API.
-For some reason that is not default behavior, need to set the environment variable:
+```sh
+PROJECT_ID=nmiu-play
+SA=nmiu-cluster-admin
+
+gcloud iam service-accounts create ${SA} --display-name=${SA}
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} --member=serviceAccount:${SA}@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/container.clusterAdmin
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} --member=serviceAccount:${SA}@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/iam.serviceAccountActor
+
+gcloud iam service-accounts keys create ${SA}_private_key.json --iam-account=${SA}@${PROJECT_ID}.iam.gserviceaccount.com
+
+gcloud auth activate-service-account ${SA}@${PROJECT_ID}.iam.gserviceaccount.com --key-file=${SA}_private_key.json
+```
 
 ```sh
 export CLOUDSDK_CONTAINER_USE_V1_API_CLIENT=false
@@ -11,6 +23,10 @@ export CLOUDSDK_CONTAINER_USE_V1_API_CLIENT=false
 or
 ```sh
 gcloud config set container/use_v1_api_client false
+```
+
+```sh
+gcloud alpha container clusters list --log-http
 ```
 
 *https://cloud.google.com/kubernetes-engine/docs/reference/api-organization#beta*
@@ -25,7 +41,7 @@ gcloud alpha container clusters create kube-test \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
---cluster-version=1.9.1-gke.0 \
+--cluster-version=1.9.2-gke.0 \
 --node-labels=storagenode=glusterfs \
 --tags=ssh \
 --enable-kubernetes-alpha \
