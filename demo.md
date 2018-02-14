@@ -4,7 +4,8 @@
 
 ```sh
 PROJECT_ID=nmiu-play
-SA=nmiu-cluster-admin
+SA=my-cluster-admin
+# SA=nmiu-cluster-admin
 
 gcloud iam service-accounts create ${SA} --display-name=${SA}
 
@@ -12,9 +13,9 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} --member=serviceAccount:${S
 
 gcloud projects add-iam-policy-binding ${PROJECT_ID} --member=serviceAccount:${SA}@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/iam.serviceAccountActor
 
-gcloud iam service-accounts keys create ${SA}_private_key.json --iam-account=${SA}@${PROJECT_ID}.iam.gserviceaccount.com
+gcloud iam service-accounts keys create ${SA}-private-key.json --iam-account=${SA}@${PROJECT_ID}.iam.gserviceaccount.com
 
-gcloud auth activate-service-account ${SA}@${PROJECT_ID}.iam.gserviceaccount.com --key-file=${SA}_private_key.json
+gcloud auth activate-service-account ${SA}@${PROJECT_ID}.iam.gserviceaccount.com --key-file=${SA}-private-key.json
 ```
 
 ```sh
@@ -41,12 +42,13 @@ gcloud alpha container clusters create kube-test \
 --machine-type=n1-standard-2 \
 --num-nodes=3 \
 --image-type=COS \
---cluster-version=1.9.2-gke.0 \
+--cluster-version=1.9.2-gke.1 \
 --node-labels=storagenode=glusterfs \
 --tags=ssh \
 --enable-kubernetes-alpha \
---local-ssd-volumes count=1,type=nvme,format=block \
---scopes cloud-platform,storage-rw,logging-write,monitoring-write,service-control,service-management
+--local-ssd-volumes count=1,type=scsi,format=block \
+--preemptible \
+--scopes default,cloud-platform,cloud-source-repos,service-control
 ```
 
 ### Modprobe / Cleanup SSD
@@ -73,9 +75,7 @@ metadata:
   name: default-rbac
 subjects:
   - kind: ServiceAccount
-    # Reference to upper's `metadata.name`
     name: default
-    # Reference to upper's `metadata.namespace`
     namespace: default
 roleRef:
   kind: ClusterRole
