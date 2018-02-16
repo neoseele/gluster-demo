@@ -51,6 +51,11 @@ gcloud alpha container clusters create kube-test \
 --scopes default,cloud-platform,cloud-source-repos,service-control
 ```
 
+_unset use_v1_api_client_ 
+```sh
+gcloud config unset container/use_v1_api_client
+```
+
 ### Modprobe / Cleanup SSD
 
 ```sh
